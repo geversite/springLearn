@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<h2>User Management</h2>
+
+<!-- 用户列表 -->
+<div>
+    <h3>All Users</h3>
+    <button onclick="getAllUsers()">Refresh User List</button>
+    <table id="userTable">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Password</th>
+        </tr>
+        <!-- 用户列表项将在这里动态插入 -->
+    </table>
+</div>
+
+<!-- 添加用户 -->
+<div>
+    <h3>Add User</h3>
+    ID: <input type="number" id="addUserId"><br>
+    Name: <input type="text" id="addUserName"><br>
+    Password: <input type="password" id="addUserPassword"><br>
+    <button onclick="addUser()">Add User</button>
+</div>
+
+<!-- 查找用户 -->
+<div>
+    <h3>Find User by ID</h3>
+    ID: <input type="number" id="findUserId"><br>
+    <button onclick="findUser()">Find User</button>
+</div>
+
+<!-- 更新用户 -->
+<div>
+    <h3>Update User</h3>
+    ID: <input type="number" id="updateUserId"><br>
+    Name: <input type="text" id="updateUserName"><br>
+    Password: <input type="password" id="updateUserPassword"><br>
+    <button onclick="updateUser()">Update User</button>
+</div>
+
+<!-- 删除用户 -->
+<div>
+    <h3>Delete User by ID</h3>
+    ID: <input type="number" id="deleteUserId"><br>
+    <button onclick="deleteUser()">Delete User</button>
+</div>
+<script>
+    function getAllUsers() {
+        fetch('/users')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById('userTable');
+                while(table.rows.length > 1) {
+                    table.deleteRow(1);
+                }
+                data.forEach(user => {
+                    let row = table.insertRow();
+                    let cellId = row.insertCell(0);
+                    let cellName = row.insertCell(1);
+                    let cellPassword = row.insertCell(2);
+                    cellId.innerHTML = user.id;
+                    cellName.innerHTML = user.name;
+                    cellPassword.innerHTML = user.passwd;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function addUser() {
+        const id = document.getElementById('addUserId').value;
+        const name = document.getElementById('addUserName').value;
+        const passwd = document.getElementById('addUserPassword').value;
+        fetch('/userAdd', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id, name, passwd }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            getAllUsers();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function findUser() {
+        const id = document.getElementById('findUserId').value;
+        fetch(`/user?id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                alert(data ? `Found user: ${data.name}` : "User not found");
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function updateUser() {
+    const id = document.getElementById('updateUserId').value;
+    const name = document.getElementById('updateUserName').value;
+    const passwd = document.getElementById('updateUserPassword').value;
+    fetch(`/userUpdate?id=${encodeURIComponent(id)}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, passwd }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        getAllUsers();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+    function deleteUser() {
+        const id = document.getElementById('deleteUserId').value;
+        fetch(`/userDel?id=${id}`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            getAllUsers();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    getAllUsers();
+</script>
+</body>
+</html>

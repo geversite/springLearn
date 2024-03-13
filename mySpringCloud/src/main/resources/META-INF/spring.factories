@@ -1,0 +1,1 @@
+autoConfigure=org.mySpring.cloud.eureka.EurekaAutoConfig,org.mySpring.cloud.feign.FeignAutoConfig
