@@ -51,7 +51,7 @@ public class SimpleExecutor implements Executor{
             }
             while (resultSet.next()){
                 ResultSetMetaData metaData = resultSet.getMetaData();
-                Object o = resultType.newInstance();
+                Object o = resultType.getConstructor().newInstance();
 //            Object o = new Object();
                 for (int i = 1; i <= metaData.getColumnCount(); i++){
                     String name = metaData.getColumnName(i);

@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class XmlConfigBuilder {
 
-    private Configuration configuration;
+    private final Configuration configuration;
 
     public XmlConfigBuilder(){
         this.configuration = new Configuration();
