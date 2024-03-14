@@ -10,8 +10,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory{
     }
 
     public SqlSession openSession(){
-        DefaultSqlSession session = new DefaultSqlSession(configuration);
-        return session;
+        return new DefaultSqlSession(configuration);
     }
 
 
