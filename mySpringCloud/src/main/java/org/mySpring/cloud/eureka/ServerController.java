@@ -3,6 +3,7 @@ package org.mySpring.cloud.eureka;
 import lombok.SneakyThrows;
 import org.mySpring.annotation.Controller;
 import org.mySpring.annotation.ResponseBody;
+import org.mySpring.cloud.config.ConfigLib;
 import org.mySpring.web.annotation.RequestMapping;
 import org.myTomcat.entity.HttpRequest;
 import org.mylog.Logger;
@@ -18,7 +19,7 @@ public class ServerController {
 
     Logger log = Logger.getLogger();
 
-    long period = EurekaLib.period();
+    long period = ConfigLib.period();
 
     public ServerController(){
         new Timer().schedule(new Worker(),3000,period);
@@ -34,7 +35,7 @@ public class ServerController {
         if(!service2Host.containsKey(rpcName)){
             service2Host.put(rpcName, new ArrayList<>());
         }
-        if(!host2Service.containsKey(host)){
+        if(!host2Service.containsKey(address)){
             host2Service.put(address, new ArrayList<>());
         }
         if(!service2Host.get(rpcName).contains(address)){

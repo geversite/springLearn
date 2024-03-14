@@ -1,5 +1,6 @@
 package org.mySpring.cloud.eureka;
 
+import org.mySpring.cloud.config.ConfigLib;
 import org.mySpring.context.ApplicationContext;
 import org.mySpring.web.servlet.DispatcherServlet;
 import org.myTomcat.core.MyTomcat;
@@ -24,15 +25,20 @@ public class Server implements Runnable{
             throw new RuntimeException(e);
         }
         MyTomcat myTomcat = new MyTomcat();
-
         myTomcat.getConfig().setPort(port);
-
         myTomcat.addServlet("/*", new DispatcherServlet(context));
+        registerToConfig();
 
         try{
             myTomcat.start();
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    private void registerToConfig() {
+        if(ConfigLib.isValidConfig()){
+            ConfigLib.registerEureka();
         }
     }
 }

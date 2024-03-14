@@ -9,8 +9,9 @@ import org.mySpring.boot.Conditional;
 @Import(FeignRegistrar.class)
 public class FeignAutoConfig {
 
-//    @Bean
-//    public Server getServer() throws Exception {
-//        return new Server();
-//    }
+    @Bean
+    public FeignClientFactory getClientFactory(){
+        return new FeignClientFactory();
+    }
+
 }

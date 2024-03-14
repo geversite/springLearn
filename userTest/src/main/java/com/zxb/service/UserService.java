@@ -3,11 +3,7 @@ package com.zxb.service;
 import com.zxb.mapper.UserMapper;
 import com.zxb.pojo.User;
 import org.mySpring.annotation.Autowired;
-import org.mySpring.annotation.Service;
-import org.myBatis.session.SqlSession;
-import org.myBatis.session.SqlSessionFactory;
-import org.myBatis.session.SqlSessionFactoryBuilder;
-import org.mySpring.cloud.RPCService;
+import org.mySpring.cloud.annotation.RPCService;
 
 import java.util.List;
 

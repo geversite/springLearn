@@ -1,11 +1,11 @@
 package org.example.controller;
 
 import com.zxb.pojo.User;
-import org.mySpring.cloud.RPCService;
+import org.mySpring.cloud.annotation.FeignClient;
 
 import java.util.List;
 
-@RPCService("com.zxb.service.UserService")
+@FeignClient("com.zxb.service.UserService")
 public interface ImportService {
 
     public User getUser(int id);

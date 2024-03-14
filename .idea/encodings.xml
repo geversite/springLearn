@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/ClientTest/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ClientTest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configTestS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configTestS/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eurekaTestS/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eurekaTestS/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/myBatis-spring-boot-starter/src/main/java" charset="UTF-8" />

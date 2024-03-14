@@ -3,7 +3,7 @@ package org.mySpring.cloud.feign;
 import lombok.SneakyThrows;
 import org.mySpring.context.ApplicationContext;
 import org.mySpring.boot.Environment;
-import org.mySpring.cloud.eureka.EurekaLib;
+import org.mySpring.cloud.config.ConfigLib;
 import org.myTomcat.http.HttpUtil;
 import org.myTomcat.http.SimpleServer;
 
@@ -19,7 +19,7 @@ public class FeignServer {
     
     public FeignServer(ApplicationContext context) throws Exception {
         try {
-            port = Integer.parseInt(Environment.getEnvironment().getData("feignServer.port"));
+            port = ConfigLib.feignPort();
         } catch (Exception e) {
             port = 8849;
         }
@@ -28,8 +28,8 @@ public class FeignServer {
 
     public void registerService(Class<?> clazz) {
         try {
-            int eurekaPort = EurekaLib.eurekaPort();
-            String serverIP = EurekaLib.eurekaIP();
+            int eurekaPort = ConfigLib.eurekaPort();
+            String serverIP = ConfigLib.eurekaIP();
             URL url = new URL("http://"+serverIP+":"+eurekaPort+"/registerService?rpcName="+clazz.getName()+"&port="+port);
             HttpUtil.doHttpGet(url);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class FeignServer {
                 context.register(FeignHandler.class);
                 this.handler = context.getBean(FeignHandler.class.getName());
 
-                new Timer().schedule(new Worker(),0,EurekaLib.period()/2);
+                new Timer().schedule(new Worker(),0, ConfigLib.period()/2);
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -61,9 +61,9 @@ public class FeignServer {
             try{
                 super.run();
             }catch (Exception e){
-                int eurekaPort = EurekaLib.eurekaPort();
-                String serverIP = EurekaLib.eurekaIP();
-                URL url = new URL("http://"+serverIP+":"+eurekaPort+"/logoffService"+"&port="+port);
+                int eurekaPort = ConfigLib.eurekaPort();
+                String serverIP = ConfigLib.eurekaIP();
+                URL url = new URL("http://"+serverIP+":"+eurekaPort+"/logoffService"+"?port="+port);
                 HttpUtil.doHttpGet(url);
             }
         }
@@ -73,8 +73,8 @@ public class FeignServer {
             @SneakyThrows
             @Override
             public void run() {
-                int eurekaPort = EurekaLib.eurekaPort();
-                String serverIP = EurekaLib.eurekaIP();
+                int eurekaPort = ConfigLib.eurekaPort();
+                String serverIP = ConfigLib.eurekaIP();
                 URL url = new URL("http://"+serverIP+":"+eurekaPort+"/renewalService"+"?port="+port);
                 HttpUtil.doHttpGet(url);
             }

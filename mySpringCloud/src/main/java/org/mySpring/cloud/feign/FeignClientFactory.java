@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.mySpring.boot.Environment;
-import org.mySpring.cloud.RPCService;
-import org.mySpring.cloud.eureka.EurekaLib;
-import org.mySpring.lib.TypeSwitch;
+import org.mySpring.cloud.config.ConfigLib;
 import org.myTomcat.http.HttpResponse;
 import org.myTomcat.http.HttpUtil;
 
@@ -16,23 +13,17 @@ import java.net.URL;
 
 public class FeignClientFactory {
 
-    public Object build(Class<?> clazz){
+    public Object build(Class<?> clazz, String serverClass){
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clazz);
         enhancer.setCallback(new MethodInterceptor() {
             @Override
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-                String serverClass = clazz.getAnnotation(RPCService.class).value();
-                Environment environment = Environment.getEnvironment();
-                int port;
-                try {
-                    port = Integer.parseInt(environment.getData("eurekaServer.port"));
-                } catch (Exception e) {
-                    port = 8848;
-                }
-                String serverIP = EurekaLib.eurekaIP();
+
+                int port = ConfigLib.eurekaPort();
+                String serverIP = ConfigLib.eurekaIP();
                 // 创建一个URL对象
-                URL url = new URL("http://"+serverIP+":"+port+"/getService?rpcName="+clazz.getAnnotation(RPCService.class).value());
+                URL url = new URL("http://"+serverIP+":"+port+"/getService?rpcName="+serverClass);
                 // 打开连接
                 HttpResponse response = HttpUtil.doHttpGet(url);
                 String remoteHost = response.getMsg();

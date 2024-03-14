@@ -1,10 +1,12 @@
 package org.mySpring.cloud.feign;
 
+import org.mySpring.annotation.Import;
+import org.mySpring.cloud.annotation.FeignClient;
 import org.mySpring.context.ApplicationContext;
 import org.mySpring.context.BeanBuilder;
 import org.mySpring.context.BeanDefinition;
 import org.mySpring.context.BeanRegistrar;
-import org.mySpring.cloud.RPCService;
+import org.mySpring.cloud.annotation.RPCService;
 
 import java.io.File;
 import java.net.URL;
@@ -12,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Import(InjectionProcessor.class)
 public class FeignRegistrar implements BeanRegistrar {
 
 
@@ -36,23 +39,20 @@ public class FeignRegistrar implements BeanRegistrar {
                     try {
                         Class<?> clazz = loader.loadClass(fileName);
                         if(clazz.isAnnotationPresent(RPCService.class)) {
-                            String beanName = clazz.getAnnotation(RPCService.class).value();
-                            if (beanName.equals("")) {
-                                map.put(clazz.getName(), new BeanDefinition(clazz, "singleton"));
-                                if(!registered){
-                                    feignServer = new FeignServer(context);
-                                    registered = true;
-                                }
-                                feignServer.registerService(clazz);
-                            }else {
-                                BeanDefinition beanDefinition = new BeanDefinition(clazz, "singleton");
-                                BeanBuilder builder = new BeanBuilder();
-                                builder.setBeanName("org.mySpring.cloud.feign.FeignClientFactory");
-                                builder.setMethod(FeignClientFactory.class.getMethod("build", Class.class));
-                                builder.setParams(new Object[]{clazz});
-                                beanDefinition.setBuilder(builder);
-                                map.put(clazz.getName(), beanDefinition);
+                            map.put(clazz.getName(), new BeanDefinition(clazz, "singleton"));
+                            if(!registered){
+                                feignServer = new FeignServer(context);
+                                registered = true;
                             }
+                            feignServer.registerService(clazz);
+                        }else if(clazz.isAnnotationPresent(FeignClient.class)) {
+                            BeanDefinition beanDefinition = new BeanDefinition(clazz, "singleton");
+                            BeanBuilder builder = new BeanBuilder();
+                            builder.setBeanName(FeignClientFactory.class.getName());
+                            builder.setMethod(FeignClientFactory.class.getMethod("build", Class.class, String.class));
+                            builder.setParams(new Object[]{clazz, clazz.getAnnotation(FeignClient.class).value()});
+                            beanDefinition.setBuilder(builder);
+                            map.put(clazz.getName(), beanDefinition);
                         }
                     } catch (ClassNotFoundException e) {
                         throw new RuntimeException(e);

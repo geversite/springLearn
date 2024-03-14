@@ -16,7 +16,9 @@ public class MyTomcatServer implements WebServer {
         }catch (Exception e){
             port = 8080;
         }
-
+        if(port==-1){
+            return;
+        }
         myTomcat.getConfig().setPort(port);
 
         myTomcat.addServlet("/*", new DispatcherServlet(context));

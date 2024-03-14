@@ -1,6 +1,6 @@
 package com.zxb.service;
 
-import org.mySpring.cloud.RPCService;
+import org.mySpring.cloud.annotation.RPCService;
 
 @RPCService
 public class ExportService {

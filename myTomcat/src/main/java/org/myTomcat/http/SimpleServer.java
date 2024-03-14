@@ -7,6 +7,7 @@ import org.myTomcat.core.HandlerRequest;
 import org.myTomcat.entity.HttpRequest;
 import org.myTomcat.entity.HttpResponse;
 import org.myTomcat.entity.HttpServlet;
+import org.mylog.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,11 +26,14 @@ public class SimpleServer implements Runnable{
 
     protected int port;
 
+    private static final Logger log = Logger.getLogger();
+
     public void run(){
         ServerSocket serverSocket  =null;
         Socket socket;
         try {
             serverSocket = new ServerSocket(port);
+            log.info("SimpleServer started on port "+port);
             while (true){
                 socket = serverSocket.accept();
                 new Thread(new SimpleHandler(socket,handler)).start();
@@ -51,6 +55,8 @@ public class SimpleServer implements Runnable{
 
         private final Socket socket;
         private final Object handler;
+
+        private static final Logger log = Logger.getLogger();
         public SimpleHandler(Socket socket, Object handler) {
             this.socket = socket;
             this.handler = handler;
@@ -64,12 +70,13 @@ public class SimpleServer implements Runnable{
             ) {
                 HttpRequest request = new HttpRequest(socket);
                 HttpResponse response = new HttpResponse(socket);
+                log.info(request.getRequestURI());
                 String uri = request.getRequestURI();
                 Method method = handler.getClass().getMethod(uri.substring(1).split("\\?")[0],HttpRequest.class, HttpResponse.class);
                 Object result = method.invoke(handler, request, response);
                 ObjectMapper mapper = new ObjectMapper();
                 String json = mapper.writeValueAsString(result);
-                if(method.getReturnType()==String.class)
+                if(result instanceof String)
                     json = (String)result;
                 response.writeBody(json);
                 response.writeTo(outputStream);

@@ -37,6 +37,8 @@ public class ApplicationContext {
     private final ConcurrentHashMap<String, Object> singletonPoolCache = new ConcurrentHashMap<>();
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
+    private final HashMap<String,BeanDefinition> beanPostProcessorNames = new HashMap<>();
+
     private final Map<Method, PointCutHandler> aspectMap = new HashMap<>();
 
     private final Set<Class<?>> aspectTarget = new HashSet<>();
@@ -90,7 +92,7 @@ public class ApplicationContext {
         }
     }
 
-    public Object getBean(String beanName) throws IllegalAccessException {
+    public Object getBean(String beanName) {
         if(beanDefinitionDict.get(beanName)==null){
             throw new RuntimeException("beanName "+beanName+" not exist!");
         }else {
@@ -103,10 +105,6 @@ public class ApplicationContext {
                     o = singletonPoolCache.get(beanName);
                 }
                 if(o!=null){
-//                    dependInjection(o);
-//                    initBean(beanName, o);
-//                    singletonPoolCache.remove(beanName);
-//                    singletonPool.put(beanName, o);
                     return o;
                 }else {
                     return createBean(beanName, definition);
@@ -117,7 +115,7 @@ public class ApplicationContext {
         }
     }
 
-    public <T> T getBean(String beanName, Class<T> clazz) throws IllegalAccessException {
+    public <T> T getBean(String beanName, Class<T> clazz) {
         Object o = getBean(beanName);
         if(clazz.isInstance(o)){
             return (T) o;
@@ -145,7 +143,13 @@ public class ApplicationContext {
     }
 
 
-    protected void initSingleton() throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    protected void initSingleton() throws IllegalAccessException {
+        for (String beanName: beanPostProcessorNames.keySet()){
+            BeanDefinition definition = beanDefinitionDict.get(beanName);
+            if(definition.scope.equals("singleton")){
+                getBean(beanName);
+            }
+        }
         for(String beanName: beanDefinitionDict.keySet()){
             BeanDefinition definition = beanDefinitionDict.get(beanName);
             if(definition.scope.equals("singleton")){
@@ -225,11 +229,10 @@ public class ApplicationContext {
             if(beanDefinitionDict.containsKey(beanName)){
                 throw new Exception("beanName collide.");
             }
-//            if(BeanPostProcessor.class.isAssignableFrom(clazz)){
-//                BeanPostProcessor obj = (BeanPostProcessor)clazz.getDeclaredConstructor().newInstance();
-//                beanPostProcessors.add(obj);
-//            }
             beanDefinitionDict.put(beanName,beanDefinition);
+            if(BeanPostProcessor.class.isAssignableFrom(clazz)){
+                beanPostProcessorNames.put(beanName, beanDefinition);
+            }
             if(metaData.isAnnotationPresent(Configuration.class)){
                 scanConfigure(clazz, beanName);
             }
@@ -238,11 +241,11 @@ public class ApplicationContext {
             }
         }
         if (BeanRegistrar.class.isAssignableFrom(clazz)){
-            Map<String, BeanDefinition> map = ((BeanRegistrar)clazz.newInstance()).registerList(config,this);
+            Map<String, BeanDefinition> map = ((BeanRegistrar)clazz.getDeclaredConstructor().newInstance()).registerList(config,this);
             beanDefinitionDict.putAll(map);
         }
         if (AutoConfigImportSelector.class.isAssignableFrom(clazz)){
-            selector = (AutoConfigImportSelector) clazz.newInstance();
+            selector = (AutoConfigImportSelector) clazz.getDeclaredConstructor().newInstance();
         }
 
     }
@@ -294,13 +297,13 @@ public class ApplicationContext {
                 singletonPoolCache.put(beanName, newInstance);
             }
             dependInjection(newInstance);
-            initBean(beanName, newInstance);
+            newInstance = initBean(beanName, newInstance);
             if (definition.getScope().equals("singleton")){
                 singletonPoolCache.remove(beanName);
                 singletonPool.put(beanName, newInstance);
-            }
-            if (ApplicationContextAware.class.isAssignableFrom(definition.getClazz())){
-                ((ApplicationContextAware)newInstance).setApplicationContext(this);
+                if(BeanPostProcessor.class.isAssignableFrom(definition.getClazz())){
+                    beanPostProcessors.add((BeanPostProcessor) newInstance);
+                }
             }
             return newInstance;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -328,6 +331,10 @@ public class ApplicationContext {
     private Object initBean(String beanName, Object newInstance){
 
 
+
+        if (newInstance instanceof ApplicationContextAware){
+            ((ApplicationContextAware)newInstance).setApplicationContext(this);
+        }
         if(newInstance instanceof BeanNameAware){
             ((BeanNameAware) newInstance).setBeanName(beanName);
         }
@@ -365,10 +372,8 @@ public class ApplicationContext {
             return true;
         }
         try {
-            return method.getAnnotation(Conditional.class).value().newInstance().matches(beanDefinitionDict);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+            return method.getAnnotation(Conditional.class).value().getDeclaredConstructor().newInstance().matches(beanDefinitionDict);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
