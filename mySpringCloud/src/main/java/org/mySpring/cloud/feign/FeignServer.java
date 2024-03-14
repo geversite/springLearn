@@ -1,7 +1,7 @@
 package org.mySpring.cloud.feign;
 
 import lombok.SneakyThrows;
-import org.mySpring.ApplicationContext;
+import org.mySpring.context.ApplicationContext;
 import org.mySpring.boot.Environment;
 import org.mySpring.cloud.eureka.EurekaLib;
 import org.myTomcat.http.HttpUtil;

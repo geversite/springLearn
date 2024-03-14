@@ -1,4 +1,4 @@
-package org.mySpring;
+package org.mySpring.context;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

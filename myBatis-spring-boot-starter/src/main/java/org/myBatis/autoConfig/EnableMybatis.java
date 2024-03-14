@@ -1,6 +1,6 @@
 package org.myBatis.autoConfig;
 
-import org.mySpring.BeanDefinition;
+import org.mySpring.context.BeanDefinition;
 import org.mySpring.boot.Condition;
 
 import java.util.Map;

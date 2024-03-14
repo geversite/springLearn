@@ -1,4 +1,4 @@
-package org.mySpring;
+package org.mySpring.context;
 
 public interface InitializingBean {
 

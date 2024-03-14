@@ -1,7 +1,7 @@
 package org.mySpring.boot;
 
 
-import org.mySpring.ApplicationContext;
+import org.mySpring.context.ApplicationContext;
 
 import java.util.Map;
 

@@ -7,10 +7,10 @@ import org.myBatis.executor.Update;
 import org.myBatis.configuration.Configuration;
 import org.myBatis.configuration.MappedStatement;
 import org.myBatis.session.SqlSession;
-import org.mySpring.ApplicationContext;
-import org.mySpring.BeanBuilder;
-import org.mySpring.BeanDefinition;
-import org.mySpring.BeanRegistrar;
+import org.mySpring.context.ApplicationContext;
+import org.mySpring.context.BeanBuilder;
+import org.mySpring.context.BeanDefinition;
+import org.mySpring.context.BeanRegistrar;
 import org.mySpring.lib.BeanLib;
 
 import java.io.File;

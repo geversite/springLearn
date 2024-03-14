@@ -2,8 +2,8 @@ package org.mySpring.web.servlet;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.mySpring.BeanDefinition;
-import org.mySpring.ApplicationContext;
+import org.mySpring.context.BeanDefinition;
+import org.mySpring.context.ApplicationContext;
 import org.mySpring.annotation.Controller;
 import org.mySpring.annotation.RequestBody;
 import org.mySpring.annotation.ResponseBody;
@@ -18,7 +18,6 @@ import org.myTomcat.entity.HttpRequest;
 import org.myTomcat.entity.HttpResponse;
 import org.myTomcat.entity.HttpServlet;
 
-import javax.lang.model.type.PrimitiveType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,7 +1,7 @@
 package org.mySpring.cloud.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.mySpring.ApplicationContext;
+import org.mySpring.context.ApplicationContext;
 import org.mySpring.annotation.*;
 import org.mySpring.lib.TypeSwitch;
 import org.myTomcat.entity.HttpRequest;

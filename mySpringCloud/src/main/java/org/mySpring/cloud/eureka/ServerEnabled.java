@@ -1,9 +1,8 @@
 package org.mySpring.cloud.eureka;
 
-import org.mySpring.BeanDefinition;
+import org.mySpring.context.BeanDefinition;
 import org.mySpring.boot.Condition;
 import org.mySpring.boot.SpringApplication;
-import org.mySpring.cloud.eureka.EurekaServer;
 
 import java.util.Map;
 

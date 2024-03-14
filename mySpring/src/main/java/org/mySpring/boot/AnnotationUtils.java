@@ -1,6 +1,6 @@
 package org.mySpring.boot;
 
-import org.mySpring.ClassMetaData;
+import org.mySpring.context.ClassMetaData;
 
 import java.lang.annotation.Annotation;
 

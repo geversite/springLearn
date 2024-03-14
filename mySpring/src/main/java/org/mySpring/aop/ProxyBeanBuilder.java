@@ -3,8 +3,8 @@ package org.mySpring.aop;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.mySpring.ApplicationContext;
-import org.mySpring.BeanDefinition;
+import org.mySpring.context.ApplicationContext;
+import org.mySpring.context.BeanDefinition;
 
 import java.lang.reflect.Method;
 import java.util.Map;

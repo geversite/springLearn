@@ -1,6 +1,6 @@
 package org.mySpring.cloud.eureka;
 
-import org.mySpring.ApplicationContext;
+import org.mySpring.context.ApplicationContext;
 import org.mySpring.web.servlet.DispatcherServlet;
 import org.myTomcat.core.MyTomcat;
 
