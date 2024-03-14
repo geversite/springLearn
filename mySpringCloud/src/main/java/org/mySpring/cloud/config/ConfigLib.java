@@ -6,19 +6,24 @@ import org.myTomcat.http.HttpUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ConfigLib {
 
     private static final Environment environment;
 
-    private static final boolean validConfig ;
+    private static final boolean validConfig;
     private static String configIP = null;
     private static int configPort;
+    private static final Map<String,String> cache;
 
 
     static {
         environment = Environment.getEnvironment();
+        cache = new ConcurrentHashMap<>();
         validConfig= environment.getData("configServer.ip")!=null;
         if(validConfig){
             configIP = (environment.getData("configServer.ip"));
@@ -87,6 +92,9 @@ public class ConfigLib {
     }
 
     private static String getConfig(String s){
+        if (cache.containsKey(s)){
+            return cache.get(s);
+        }
         URL url = null;
         try {
             url = new URL("http://"+configIP+":"+configPort+"/getConfig"+"?key="+s);
@@ -94,11 +102,12 @@ public class ConfigLib {
             throw new RuntimeException(e);
         }
         HttpResponse response = HttpUtil.doHttpGet(url);
+        cache.put(s, response.getMsg());
         return response.getMsg();
     }
 
     private static String setConfig(String key, String value){
-
+        cache.remove(key);
         URL url = null;
         try {
             url = new URL("http://"+configIP+":"+configPort+"/setConfig"+"?key="+key+"&value="+value);
@@ -110,6 +119,7 @@ public class ConfigLib {
     }
 
     public static String registerEureka(){
+        cache.remove("eurekaServer.ip");
         URL url = null;
         try {
             url = new URL("http://"+configIP+":"+configPort+"/registerEureka");
