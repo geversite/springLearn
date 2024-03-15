@@ -10,13 +10,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.concurrent.*;
 
 
 public class MyTomcat {
 
     static Logger log = Logger.getLogger();
     ServerSocket serverSocket = null;
+
+    ThreadPoolExecutor pool;
 
 
     Map<String, HttpServlet> servletMapping = new HashMap<>();
@@ -43,12 +45,10 @@ public class MyTomcat {
     public void start() throws Exception{
         Long startingTime = System.currentTimeMillis();
         log.info("MyTomcat Starting...");
-
         if (config==null){
             config = new ServerConfig();
-            config.setPort(8088);
         }
-
+        pool = new ThreadPoolExecutor(config.getThread(), config.getMaxThread(), 60, TimeUnit.SECONDS,new LinkedBlockingQueue<>());
         for (HttpServlet servlet : servletMapping.values()) {
             servlet.init();
         }
@@ -60,7 +60,7 @@ public class MyTomcat {
             log.info("MyTomcat Started on port "+config.getPort()+" in "+(finTime-startingTime)+"ms...");
             while (true){
                 socket = serverSocket.accept();
-                new Thread(new HandlerRequest(socket,servletMapping)).start();
+                pool.execute(new HandlerRequest(socket, servletMapping));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

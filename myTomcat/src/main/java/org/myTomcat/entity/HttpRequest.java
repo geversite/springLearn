@@ -2,6 +2,7 @@ package org.myTomcat.entity;
 
 import lombok.Data;
 import org.myTomcat.lib.URIParser;
+import org.mylog.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class HttpRequest {
     private String body;
     private Map<String, String[]> parameterMap = new HashMap<>();
     private BufferedReader reader;
+    private static Logger log = Logger.getLogger();
 
     public HttpRequest(Socket socket) throws IOException, URISyntaxException {
         InputStream inputStream = socket.getInputStream();
@@ -41,8 +43,8 @@ public class HttpRequest {
             this.requestURI = requestLineParts[1];
             this.httpVersion = requestLineParts[2];
         }
-
         parameterMap = URIParser.parseURI(requestURI);
+
 
         while ((line = reader.readLine()) != null && !line.isEmpty()) {
             String[] headerParts = line.split(": ");

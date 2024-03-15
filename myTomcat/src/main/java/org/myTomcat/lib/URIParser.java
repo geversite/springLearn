@@ -1,5 +1,7 @@
 package org.myTomcat.lib;
 
+import org.mylog.Logger;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -9,10 +11,14 @@ import java.util.Map;
 
 public class URIParser {
 
+    public static Logger log = Logger.getLogger();
+
     public static Map<String, String[]> parseURI(String uriStr) throws URISyntaxException {
         Map<String, List<String>> parameterMap = new HashMap<>();
         Map<String, String[]> stringMap = new HashMap<>();
-        URI uri = new URI(uriStr);
+        URI uri = null;
+        uri = new URI(uriStr);
+
         String query = uri.getQuery(); // 获取查询部分
 
         if (query != null) {

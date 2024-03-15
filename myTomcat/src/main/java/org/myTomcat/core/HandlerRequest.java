@@ -31,7 +31,7 @@ public class HandlerRequest implements Runnable{
                 OutputStream outputStream = socket.getOutputStream();
              ) {
             HttpRequest request = new HttpRequest(socket);
-            log.info(request.getRequestURI());
+            log.info("received request with uri "+request.getRequestURI());
             HttpResponse response = new HttpResponse(socket);
             HttpServlet servlet = null;
             for (String s : map.keySet()) {

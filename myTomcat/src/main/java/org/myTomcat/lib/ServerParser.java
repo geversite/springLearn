@@ -22,10 +22,16 @@ public class ServerParser {
             SAXReader reader = new SAXReader();
             Document document = reader.read(stream);
             ServerConfig config = new ServerConfig();
-            Element element = document.getRootElement();
-            element = element.element("port");
+            Element root = document.getRootElement();
+            Element element = root.element("port");
             Integer port = Integer.valueOf(element.getTextTrim());
             config.setPort(port);
+            element = root.element("thread");
+            Integer thread = Integer.valueOf(element.getTextTrim());
+            config.setThread(thread);
+            element = root.element("maxThread");
+            Integer maxThread = Integer.valueOf(element.getTextTrim());
+            config.setMaxThread(maxThread);
             return config;
         }catch (Exception e){
             log.warn("server.xml not found or illegal");
