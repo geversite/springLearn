@@ -5,7 +5,7 @@ import org.mySpring.annotation.Controller;
 import org.mySpring.annotation.ResponseBody;
 import org.mySpring.cloud.config.ConfigLib;
 import org.mySpring.web.annotation.RequestMapping;
-import org.myTomcat.entity.HttpRequest;
+import org.myHttp.entity.HttpRequest;
 import org.mylog.Logger;
 
 import java.util.*;

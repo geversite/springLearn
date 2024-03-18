@@ -1,7 +1,7 @@
-package org.myTomcat.entity;
+package org.myHttp.entity;
 
 import lombok.Data;
-import org.myTomcat.lib.URIParser;
+import org.myHttp.lib.URIParser;
 import org.mylog.Logger;
 
 import java.io.BufferedReader;

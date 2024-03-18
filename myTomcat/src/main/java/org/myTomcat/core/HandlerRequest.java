@@ -1,9 +1,9 @@
 package org.myTomcat.core;
 
 import org.mylog.Logger;
-import org.myTomcat.entity.HttpRequest;
-import org.myTomcat.entity.HttpResponse;
-import org.myTomcat.entity.HttpServlet;
+import org.myHttp.entity.HttpRequest;
+import org.myHttp.entity.HttpResponse;
+import org.myHttp.entity.HttpServlet;
 import org.myTomcat.lib.PathParser;
 
 import java.io.*;

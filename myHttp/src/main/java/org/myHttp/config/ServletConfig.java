@@ -1,4 +1,4 @@
-package org.myTomcat.config;
+package org.myHttp.config;
 
 import lombok.Data;
 

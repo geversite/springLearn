@@ -1,4 +1,4 @@
-package org.myTomcat.entity;
+package org.myHttp.entity;
 
 import lombok.Data;
 

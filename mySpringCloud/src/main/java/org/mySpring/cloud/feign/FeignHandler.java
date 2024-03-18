@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mySpring.context.ApplicationContext;
 import org.mySpring.annotation.*;
 import org.mySpring.lib.TypeSwitch;
-import org.myTomcat.entity.HttpRequest;
-import org.myTomcat.entity.HttpResponse;
+import org.myHttp.entity.HttpRequest;
+import org.myHttp.entity.HttpResponse;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

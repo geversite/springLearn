@@ -13,14 +13,20 @@
     <file url="file://$PROJECT_DIR$/myBatis/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/myCP/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/myCP/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myHttp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myHttp/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mySpring/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mySpring/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mySpringCloud/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mySpringCloud/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myTomcat-spring-boot-starter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/myTomcat-spring-boot-starter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/myTomcat/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/myTomcat/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mylog/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mylog/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-boot-starter-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-boot-starter-web/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/userTest/src/main/java" charset="UTF-8" />

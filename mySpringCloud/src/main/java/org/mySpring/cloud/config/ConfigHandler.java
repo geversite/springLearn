@@ -1,8 +1,8 @@
 package org.mySpring.cloud.config;
 
 import org.mySpring.boot.Environment;
-import org.myTomcat.entity.HttpRequest;
-import org.myTomcat.entity.HttpResponse;
+import org.myHttp.entity.HttpRequest;
+import org.myHttp.entity.HttpResponse;
 
 import java.util.concurrent.ConcurrentHashMap;
 

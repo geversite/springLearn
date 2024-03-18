@@ -20,6 +20,9 @@
         <module>eurekaTestS</module>
         <module>ClientTest</module>
         <module>configTestS</module>
+        <module>myTomcat-spring-boot-starter</module>
+        <module>spring-boot-starter-web</module>
+        <module>myHttp</module>
     </modules>
 
     <properties>

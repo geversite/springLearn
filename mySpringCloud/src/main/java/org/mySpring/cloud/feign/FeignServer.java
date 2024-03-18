@@ -2,10 +2,9 @@ package org.mySpring.cloud.feign;
 
 import lombok.SneakyThrows;
 import org.mySpring.context.ApplicationContext;
-import org.mySpring.boot.Environment;
 import org.mySpring.cloud.config.ConfigLib;
-import org.myTomcat.http.HttpUtil;
-import org.myTomcat.http.SimpleServer;
+import org.myHttp.simple.HttpUtil;
+import org.myHttp.simple.SimpleServer;
 
 import java.net.URL;
 import java.util.Timer;

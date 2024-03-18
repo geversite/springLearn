@@ -1,7 +1,7 @@
-package org.myTomcat.entity;
+package org.myHttp.entity;
 
 import lombok.Data;
-import org.myTomcat.config.ServletConfig;
+import org.myHttp.config.ServletConfig;
 
 @Data
 public class HttpServlet {

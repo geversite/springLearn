@@ -10,14 +10,17 @@ public class SpringApplication {
     public static void run(Class<?> clazz) throws Exception {
         Environment.environmentInit();
         ApplicationContext context = new ApplicationContext(clazz);
-        getWebServer(context).start(context);
+        WebServer webServer = getWebServer(context);
+        if(webServer!=null){
+            webServer.start(context);
+        }
     }
 
     private static WebServer getWebServer(ApplicationContext context) throws IllegalAccessException {
         Map<String,WebServer> map = context.getBeansOfType(WebServer.class);
 
         if(map.size()==0){
-            throw new NullPointerException();
+            return null;
         }
         if(map.size()>1){
             throw new IllegalStateException();

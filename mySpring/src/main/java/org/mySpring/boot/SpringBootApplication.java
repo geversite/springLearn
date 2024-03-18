@@ -13,7 +13,6 @@ import java.lang.annotation.*;
 @ComponentScan
 @AutoConfiguration
 @Configuration
-@Import(WebServerAutoConfig.class)
 public @interface SpringBootApplication {
 
 }

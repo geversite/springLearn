@@ -1,6 +1,6 @@
 package org.mySpring.cloud.config;
 
-import org.myTomcat.http.SimpleServer;
+import org.myHttp.simple.SimpleServer;
 
 public class ConfigServer {
     int port;

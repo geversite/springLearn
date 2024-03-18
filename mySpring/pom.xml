@@ -40,15 +40,18 @@
         </dependency>
         <dependency>
             <groupId>org.example</groupId>
-            <artifactId>myTomcat</artifactId>
+            <artifactId>mylog</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>3.3.0</version> <!-- 使用最新的可用版本 -->
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>myHttp</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package org.myTomcat.lib;
+package org.myHttp.lib;
 
 import org.mylog.Logger;
 

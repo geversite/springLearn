@@ -1,4 +1,4 @@
-package org.myTomcat.http;
+package org.myHttp.simple;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

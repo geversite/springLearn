@@ -1,12 +1,9 @@
-package org.myTomcat.http;
+package org.myHttp.simple;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.myTomcat.core.HandlerRequest;
-import org.myTomcat.entity.HttpRequest;
-import org.myTomcat.entity.HttpResponse;
-import org.myTomcat.entity.HttpServlet;
+import org.myHttp.entity.HttpRequest;
+import org.myHttp.entity.HttpResponse;
 import org.mylog.Logger;
 
 import java.io.IOException;
@@ -69,7 +66,7 @@ public class SimpleServer implements Runnable{
                     OutputStream outputStream = socket.getOutputStream();
             ) {
                 HttpRequest request = new HttpRequest(socket);
-                HttpResponse response = new HttpResponse(socket);
+                org.myHttp.entity.HttpResponse response = new org.myHttp.entity.HttpResponse(socket);
                 log.info(request.getRequestURI());
                 String uri = request.getRequestURI();
                 Method method = handler.getClass().getMethod(uri.substring(1).split("\\?")[0],HttpRequest.class, HttpResponse.class);

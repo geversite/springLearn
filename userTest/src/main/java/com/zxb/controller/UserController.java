@@ -7,8 +7,8 @@ import org.mySpring.annotation.Controller;
 import org.mySpring.annotation.RequestBody;
 import org.mySpring.annotation.ResponseBody;
 import org.mySpring.web.annotation.RequestMapping;
-import org.myTomcat.entity.HttpRequest;
-import org.myTomcat.entity.HttpResponse;
+import org.myHttp.entity.HttpRequest;
+import org.myHttp.entity.HttpResponse;
 
 import java.util.List;
 

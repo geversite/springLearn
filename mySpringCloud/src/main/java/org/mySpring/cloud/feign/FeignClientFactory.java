@@ -5,8 +5,8 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.mySpring.cloud.config.ConfigLib;
-import org.myTomcat.http.HttpResponse;
-import org.myTomcat.http.HttpUtil;
+import org.myHttp.simple.HttpResponse;
+import org.myHttp.simple.HttpUtil;
 
 import java.lang.reflect.Method;
 import java.net.URL;

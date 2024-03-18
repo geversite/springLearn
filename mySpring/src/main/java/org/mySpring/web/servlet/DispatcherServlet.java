@@ -13,10 +13,10 @@ import org.mySpring.web.annotation.RequestParam;
 import org.mySpring.web.handler.MvcHandler;
 import org.mySpring.web.xml.XmlParser;
 import org.mylog.Logger;
-import org.myTomcat.config.ServletConfig;
-import org.myTomcat.entity.HttpRequest;
-import org.myTomcat.entity.HttpResponse;
-import org.myTomcat.entity.HttpServlet;
+import org.myHttp.config.ServletConfig;
+import org.myHttp.entity.HttpRequest;
+import org.myHttp.entity.HttpResponse;
+import org.myHttp.entity.HttpServlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,10 +1,8 @@
-package org.myTomcat.http;
+package org.myHttp.simple;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.BufferedReader;
 
 @Data
 @NoArgsConstructor

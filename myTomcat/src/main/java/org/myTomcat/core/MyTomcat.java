@@ -2,7 +2,7 @@ package org.myTomcat.core;
 
 import org.mylog.Logger;
 import org.myTomcat.config.ServerConfig;
-import org.myTomcat.entity.HttpServlet;
+import org.myHttp.entity.HttpServlet;
 import org.myTomcat.lib.ServerParser;
 
 import java.io.IOException;

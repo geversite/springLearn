@@ -1,12 +1,11 @@
 package org.mySpring.cloud.config;
 
 import org.mySpring.boot.Environment;
-import org.myTomcat.http.HttpResponse;
-import org.myTomcat.http.HttpUtil;
+import org.myHttp.simple.HttpResponse;
+import org.myHttp.simple.HttpUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
