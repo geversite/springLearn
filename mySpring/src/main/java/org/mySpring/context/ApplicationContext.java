@@ -124,7 +124,7 @@ public class ApplicationContext {
         }
     }
 
-    public <T> Map<String, T> getBeansOfType(Class<T> type) throws IllegalAccessException {
+    public <T> Map<String, T> getBeansOfType(Class<T> type) {
         Map<String, T> map = new HashMap<>();
         for (Map.Entry<String, BeanDefinition> entry : beanDefinitionDict.entrySet()) {
             if(type.isAssignableFrom(entry.getValue().clazz)){
@@ -134,7 +134,7 @@ public class ApplicationContext {
         return map;
     }
 
-    public <T> T getBeanOfType(Class<T> type) throws IllegalAccessException {
+    public <T> T getBeanOfType(Class<T> type) {
         Map<String, T> map = getBeansOfType(type);
         if (map.size()!=1){
             throw new RuntimeException();
@@ -143,7 +143,7 @@ public class ApplicationContext {
     }
 
 
-    protected void initSingleton() throws IllegalAccessException {
+    protected void initSingleton() {
         for (String beanName: beanPostProcessorNames.keySet()){
             BeanDefinition definition = beanDefinitionDict.get(beanName);
             if(definition.scope.equals("singleton")){
@@ -158,7 +158,7 @@ public class ApplicationContext {
         }
     }
 
-    protected void scanDir(String path) throws Exception{
+    protected void scanDir(String path) throws Exception {
         path = path.replace('.','/').trim();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         URL url = loader.getResource(path);
@@ -270,10 +270,6 @@ public class ApplicationContext {
                 if(beanDefinitionDict.containsKey(beanName)){
                     throw new Exception("beanName collide.");
                 }
-//                if(BeanPostProcessor.class.isAssignableFrom(beanClass)){
-//                    BeanPostProcessor obj = (BeanPostProcessor)method.invoke(clazz.newInstance());
-//                    beanPostProcessors.add(obj);
-//                }
                 beanDefinitionDict.put(beanName,beanDefinition);
                 if (method.getReturnType().isAnnotationPresent(Aspect.class)){
                     PointCutParser.parseAspect(method.getReturnType(), beanName , aspectMap, aspectTarget);

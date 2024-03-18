@@ -1,11 +1,13 @@
 package org.mySpring.lib;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
 public class PathCal {
-    public static String getClassPathRelativePath(File file, ClassLoader classLoader) throws Exception {
+    public static String getClassPathRelativePath(File file, ClassLoader classLoader) throws URISyntaxException, IOException {
         String filePath = file.getCanonicalPath();
 
         URL resourceUrl = classLoader.getResource("");
@@ -17,6 +19,6 @@ public class PathCal {
             }
         }
 
-        throw new Exception("The file is not on the classpath.");
+        throw new RuntimeException("The file "+filePath+" is not on the classpath.");
     }
 }
