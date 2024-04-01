@@ -1,1 +1,1 @@
-autoConfigure=org.mySpring.cloud.eureka.EurekaAutoConfig,org.mySpring.cloud.feign.FeignAutoConfig,org.mySpring.cloud.config.ConfigAutoConfig
+autoConfigure=org.mySpring.cloud.eureka.EurekaAutoConfig,org.mySpring.cloud.feign.FeignAutoConfig,org.mySpring.cloud.config.ConfigAutoConfig,org.mySpring.cloud.loadbalancer.LoadBalancerAutoConfig

@@ -33,4 +33,11 @@ public class ConfigHandler {
         return true;
     }
 
+    public Object registerLoadBalancer(HttpRequest request, HttpResponse response){
+        String val = request.getRemoteHost();
+        String key = "loadBalancerServer.ip";
+        configs.put(key,val);
+        return true;
+    }
+
 }

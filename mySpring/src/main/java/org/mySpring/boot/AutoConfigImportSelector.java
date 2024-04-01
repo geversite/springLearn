@@ -84,7 +84,7 @@ public class AutoConfigImportSelector  {
     public static URL findFirstJarUrl(URL url) throws Exception {
         // 获取原始 URL 的父目录
         URL parentUrl = new URL(url, "..");
-        Path parentPath = Paths.get(parentUrl.getPath());
+        Path parentPath = Paths.get(parentUrl.getPath().substring(1));
 
         // 使用 Files.list 流式处理目录下的文件
         Stream<Path> list = Files.list(parentPath);

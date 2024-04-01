@@ -164,7 +164,7 @@ public class ApplicationContext {
         URL url = loader.getResource(path);
         File file = new File(url.getFile());
         if(!file.isDirectory()){
-            System.out.println("Component is not a dir!\n");
+            log.warn("Component is not a dir!\n");
         }else {
             for(File dir: file.listFiles()){
                 if(dir.isDirectory()){
@@ -186,7 +186,7 @@ public class ApplicationContext {
         URL url = loader.getResource(path);
         File file = new File(url.getFile());
         if(!file.isDirectory()){
-            System.out.println("Component is not a dir!\n");
+            log.warn("Component is not a dir!\n");
         }else {
             for (File file1 : file.listFiles()) {
                 String fileName = file1.getName();

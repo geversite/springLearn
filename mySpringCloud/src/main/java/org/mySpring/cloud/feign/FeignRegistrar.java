@@ -7,6 +7,7 @@ import org.mySpring.context.BeanBuilder;
 import org.mySpring.context.BeanDefinition;
 import org.mySpring.context.BeanRegistrar;
 import org.mySpring.cloud.annotation.RPCService;
+import org.mylog.Logger;
 
 import java.io.File;
 import java.net.URL;
@@ -17,7 +18,7 @@ import java.util.Map;
 @Import(InjectionProcessor.class)
 public class FeignRegistrar implements BeanRegistrar {
 
-
+    Logger log = Logger.getLogger();
     @Override
     public Map<String, BeanDefinition> registerList(Class<?> config, ApplicationContext context) throws Exception {
         List<String> basePackages = context.getBasePackages();
@@ -26,11 +27,11 @@ public class FeignRegistrar implements BeanRegistrar {
         boolean registered = false;
         FeignServer feignServer=null;
         for (String path : basePackages) {
-            path = path.replace('.','/').trim();
+            path = path.replace('\\','/').trim();
             URL url = loader.getResource(path);
             File file = new File(url.getFile());
             if(!file.isDirectory()){
-                System.out.println("Component is not a dir!\n");
+                log.warn("Component is not a dir!\n");
             }else {
                 for (File file1 : file.listFiles()) {
                     String fileName = file1.getName();

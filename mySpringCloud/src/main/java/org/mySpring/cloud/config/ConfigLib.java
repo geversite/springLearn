@@ -57,6 +57,17 @@ public class ConfigLib {
         return eurekaIP;
     }
 
+    public static String loadBalancerIP(){
+        String eurekaIP;
+        String key ="loadBalancerServer.ip";
+        try {
+            eurekaIP = validConfig?getConfig(key):environment.getData(key);
+        } catch (Exception e) {
+            throw new RuntimeException("No loadBalancerIP Defined");
+        }
+        return eurekaIP;
+    }
+
     public static int feignPort(){
         int feignPort;
         String key = "feignServer.port";
@@ -79,6 +90,17 @@ public class ConfigLib {
         return configPort;
     }
 
+    public static int loadBalancerPort() {
+        int loadBalancerPort;
+        String key = "loadBalancerServer.port";
+        try {
+            loadBalancerPort = Integer.parseInt(validConfig? Objects.requireNonNull(getConfig(key)) :environment.getData(key));
+        } catch (Exception e) {
+            loadBalancerPort = 8846;
+        }
+        return loadBalancerPort;
+    }
+
     public static int period(){
         int period;
         String key = "eurekaServer.period";
@@ -86,6 +108,17 @@ public class ConfigLib {
             period = Integer.parseInt(validConfig? Objects.requireNonNull(getConfig(key)) :environment.getData(key));
         } catch (Exception e) {
             period = 20000;
+        }
+        return period;
+    }
+
+    public static int loadBalancerPeriod(){
+        int period;
+        String key = "loadBalancerServer.period";
+        try {
+            period = Integer.parseInt(validConfig? Objects.requireNonNull(getConfig(key)) :environment.getData(key));
+        } catch (Exception e) {
+            period = 5000;
         }
         return period;
     }
@@ -122,6 +155,18 @@ public class ConfigLib {
         URL url = null;
         try {
             url = new URL("http://"+configIP+":"+configPort+"/registerEureka");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        HttpResponse response = HttpUtil.doHttpGet(url);
+        return response.getMsg();
+    }
+
+    public static String registerLoadBalancer(){
+        cache.remove("loadBalancerServer.ip");
+        URL url = null;
+        try {
+            url = new URL("http://"+configIP+":"+configPort+"/registerLoadBalancer");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

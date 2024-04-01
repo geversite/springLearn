@@ -20,8 +20,8 @@ public class FeignClientFactory {
             @Override
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
 
-                int port = ConfigLib.eurekaPort();
-                String serverIP = ConfigLib.eurekaIP();
+                int port = ConfigLib.loadBalancerPort();
+                String serverIP = ConfigLib.loadBalancerIP();
                 // 创建一个URL对象
                 URL url = new URL("http://"+serverIP+":"+port+"/getService?rpcName="+serverClass);
                 // 打开连接

@@ -29,7 +29,7 @@ public class MapperScannerRegistrar implements BeanRegistrar {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
         for (String path : basePackages) {
-            path = path.replace('.','/').trim();
+            path = path.replace('\\','/').trim();
             URL url = loader.getResource(path);
             File file = new File(url.getFile());
             if(!file.isDirectory()){

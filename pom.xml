@@ -23,6 +23,7 @@
         <module>myTomcat-spring-boot-starter</module>
         <module>spring-boot-starter-web</module>
         <module>myHttp</module>
+        <module>loadBalancerTestS</module>
     </modules>
 
     <properties>

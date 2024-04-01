@@ -85,6 +85,11 @@ public class ServerController {
         return service2Host.get(rpcName).get(0);
     }
 
+    @RequestMapping("/getServices")
+    @ResponseBody
+    public Map<String, List<String>> getServices(){
+        return service2Host;
+    }
 
 
     class Worker extends TimerTask{
