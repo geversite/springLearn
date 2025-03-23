@@ -24,6 +24,7 @@
         <module>spring-boot-starter-web</module>
         <module>myHttp</module>
         <module>loadBalancerTestS</module>
+        <module>mySqlClient</module>
     </modules>
 
     <properties>
