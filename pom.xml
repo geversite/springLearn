@@ -25,6 +25,7 @@
         <module>myHttp</module>
         <module>loadBalancerTestS</module>
         <module>mySqlClient</module>
+        <module>mySqlServer</module>
     </modules>
 
     <properties>
