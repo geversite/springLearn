@@ -23,7 +23,7 @@ public class Statement {
     String[] params = new String[]{};
     String[] types = new String[]{};
 
-    public Statement(Connection connection, OutputStream outputStream, InputStream inputStream) {
+    public Statement(Connection connection) throws SqlException, IOException {
         supportedTypes.add("String");
         supportedTypes.add("Float");
         supportedTypes.add("Character");
@@ -34,11 +34,11 @@ public class Statement {
         supportedTypes.add("Short");
         supportedTypes.add("Date");
         this.connection = connection;
-        this.outputStream = outputStream;
-        this.inputStream = inputStream;
+        this.outputStream = connection.getOutputStream();
+        this.inputStream = connection.getInputStream();
     }
-    public Statement(String sql, Connection connection, OutputStream outputStream, InputStream inputStream) {
-        this(connection, outputStream, inputStream);
+    public Statement(String sql, Connection connection) throws SqlException, IOException {
+        this(connection);
         this.sql = sql;
     }
 
@@ -55,14 +55,22 @@ public class Statement {
         SqlObj obj = new SqlObj(this.outputStream, sql, types, params);
         obj.send();
         SqlResult result = new SqlResult(this.inputStream);
-        return result.recv();
+        ResultSet resultSet = result.recv();
+        if (connection.getAutoCommit()){
+            connection.commit();
+        }
+        return resultSet;
     }
 
     public int executeUpdate() throws IOException, SqlException {
         SqlObj obj = new SqlObj(this.outputStream, sql, types, params);
         obj.send();
         SqlResult result = new SqlResult(this.inputStream);
-        return result.recvUpdate();
+        int rows = result.recvUpdate();
+        if (connection.getAutoCommit()){
+            connection.commit();
+        }
+        return rows;
     }
 
 

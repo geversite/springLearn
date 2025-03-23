@@ -5,6 +5,7 @@ import org.mySql.client.Exception.SqlException;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 public class ResultSet {
 

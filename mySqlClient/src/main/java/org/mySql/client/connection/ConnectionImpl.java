@@ -1,12 +1,14 @@
 package org.mySql.client.connection;
 
 
+import org.mySql.client.Exception.SqlException;
 import org.mySql.client.protocol.SqlObj;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,8 +17,8 @@ public class ConnectionImpl implements Connection {
     private String ip;
     private int port;
     private String user;
-    private Socket socket;
-    private List<Statement> statements;
+    protected Socket socket;
+    private List<Statement> statements = new ArrayList<Statement>();
     private boolean autoCommit;
     private boolean closed = false;
 
@@ -29,15 +31,13 @@ public class ConnectionImpl implements Connection {
     }
 
     @Override
-    public Statement createStatement() throws IOException {
-        Statement statement = new Statement(this, this.socket.getOutputStream(),this.socket.getInputStream());
-        statements.add(statement);
-        return statement;
+    public Statement createStatement() throws IOException, SqlException {
+        return createStatement(null);
     }
 
     @Override
-    public Statement createStatement(String sql) throws IOException {
-        Statement statement = new Statement(sql, this, this.socket.getOutputStream(), this.socket.getInputStream());
+    public Statement createStatement(String sql) throws IOException, SqlException {
+        Statement statement = new Statement(sql, this);
         statements.add(statement);
         return statement;
     }
@@ -54,17 +54,21 @@ public class ConnectionImpl implements Connection {
 
 
     @Override
-    public void commit() {
+    public void commit() throws IOException, SqlException {
+        createStatement("COMMIT;").executeUpdate();
+        statements.clear();
+    }
+
+    @Override
+    public void rollback() throws IOException, SqlException {
+        createStatement("ROLLBACK;").executeUpdate();
+        statements.clear();
 
     }
 
     @Override
-    public void rollback() {
-
-    }
-
-    @Override
-    public void close() {
+    public void close() throws IOException {
+        socket.close();
         this.closed = true;
     }
 
@@ -73,9 +77,15 @@ public class ConnectionImpl implements Connection {
         return this.closed;
     }
 
+    @Override
+    public InputStream getInputStream() throws SqlException, IOException {
+        return this.socket.getInputStream();
+    }
 
-
-
+    @Override
+    public OutputStream getOutputStream() throws SqlException, IOException {
+        return this.socket.getOutputStream();
+    }
 
 
 }
