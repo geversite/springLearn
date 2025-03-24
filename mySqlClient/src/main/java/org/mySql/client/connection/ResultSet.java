@@ -32,7 +32,7 @@ public class ResultSet {
             i++;
         }
         if(extractedInfo.get("RESULT").equals("ERR")){
-            throw new SqlException("extract data result error");
+            throw new SqlException(extractedInfo.get("MSG"));
         }
 
         Map<String, String> columns=new HashMap<>();
