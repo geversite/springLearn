@@ -26,6 +26,7 @@ public class RequestHandler implements Runnable {
     @Override
     public void run() {
         boolean exit = false;
+        ConnectionInfo info = new ConnectionInfo();
         try (
                 InputStream inputStream = socket.getInputStream();
                 OutputStream outputStream = socket.getOutputStream();
@@ -36,10 +37,10 @@ public class RequestHandler implements Runnable {
                 log.info("received request: " + request.getRequestType() + ": " + request.getRequestContent());
                 switch (request.getRequestType()){
                     case AUTHORIZE:
-                        response = authHandler.handle(request);
+                        response = authHandler.handle(request, info);
                         break;
                     case SQL:
-                        response = sqlHandler.handle(request);
+                        response = sqlHandler.handle(request, info);
                         break;
                     case EXIT:
                         exit = true;

@@ -14,10 +14,21 @@ public class ResultSet {
     private Object[] thisRow;
     @Getter
     private  List<Class> metadata=new ArrayList<>();
+    @Getter
     private Map<String,Integer> column_map=new HashMap<>();
     private int column_count=0;
+    @Getter
     private List<List<Object>> alldata;
     private int row_count=0;
+
+    public ResultSet(List<List<Object>> alldata, List<Class> metadata, List<String> columns) throws SqlException {
+        this.alldata = alldata;
+        this.metadata = metadata;
+        for (int i = 0; i < columns.size(); i++) {
+             column_map.put(columns.get(i), i);
+        }
+
+    }
 
     public ResultSet(String data) throws SqlException {
         String regex = "\\[(RESULT|COLUMNS|ROWS)\\](.*?)(?=\\[RESULT|\\[COLUMNS|\\[ROWS|$)";
@@ -51,6 +62,11 @@ public class ResultSet {
         alldata=parseRows(rowList);
 
 
+    }
+
+    @Override
+    public String toString() {
+        return  "!23113";
     }
 
     public boolean next() throws SqlException {

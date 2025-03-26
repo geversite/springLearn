@@ -1,8 +1,15 @@
 package org.mysql.server;
 
 import lombok.Data;
+import org.mySql.client.Exception.SqlException;
+import org.mySql.client.connection.ResultSet;
+import org.mysql.table.Table;
+import org.mysql.table.Types;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class Response {
@@ -14,8 +21,31 @@ public class Response {
     private List<String> columnTypes;
     private List<List<String>> rows;
 
-    public Response() {
+    public Response(){}
 
+    public Response(ResultSet set) throws SqlException {
+        this.sqlType = SqlType.QUERY;
+        this.status = RespType.OK;
+        this.message="";
+        this.modify = 0;
+        this.columnNames = new ArrayList<>();
+        Map<String, Integer> columnMap = set.getColumn_map();
+        for (String columnName : columnMap.keySet()) {
+            int columnNum = columnMap.get(columnName);
+            this.columnNames.set(columnNum, columnName);
+        }
+        this.columnTypes = new ArrayList<>();
+        for (Class type: set.getMetadata()) {
+            columnTypes.add(type.getSimpleName().toUpperCase());
+        }
+        this.rows = new ArrayList<>();
+        for (List<Object> row: set.getAlldata()){
+            List<String> rowsStr = new ArrayList<>(rows.size());
+            for (Object obj: row){
+                rowsStr.add(Types.toStr(obj));
+            }
+            this.rows.add(rowsStr);
+        }
     }
 
     @Override

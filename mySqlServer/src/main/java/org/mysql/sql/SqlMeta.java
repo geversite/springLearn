@@ -8,7 +8,7 @@ import java.util.List;
 public class SqlMeta {
 
     String sql;
-    String type;
+    String type; //SIUD
     boolean scopeAll;
     List<String> scope;
     String table;

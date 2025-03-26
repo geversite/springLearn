@@ -14,14 +14,14 @@ public class DriverManager {
         String port = host.split(":")[1];
         String database = url.split("/")[1];
         Connection conn = new ConnectionImpl(ip, port, database);
-        if(authorize(conn, user, password)){
+        if(authorize(conn, user, password, database)){
             return conn;
         }
         throw new SqlException("Authorize failed");
     }
 
-    private static boolean authorize(Connection conn, String user, String password) throws SqlException, IOException {
-        SqlObj obj = new SqlObj(conn.getOutputStream(), user, new String[]{"String"}, new String[]{password});
+    private static boolean authorize(Connection conn, String user, String password, String db) throws SqlException, IOException {
+        SqlObj obj = new SqlObj(conn.getOutputStream(), user, new String[]{"String", "String"}, new String[]{password, db});
         obj.setReqType("AUTHORIZE");
         obj.send();
         try{
